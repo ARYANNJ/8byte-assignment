@@ -61,7 +61,7 @@ resource "aws_route_table" "private-route-table" {
 }
 
 resource "aws_route_table_association" "private-association" {
-  subnet_id      = aws_subnet.private-subnet.id
+  subnet_id      = aws_subnet.private-subnet-one.id
   route_table_id = aws_route_table.private-route-table.id
 }
 resource "aws_route_table" "public" {
@@ -73,8 +73,18 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public-association" {
-  subnet_id      = aws_subnet.public-subnet.id
+  subnet_id      = aws_subnet.public-subnet-one.id
   route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "public-association-two" {
+  subnet_id      = aws_subnet.public-subnet-two.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "private-association-two" {
+  subnet_id      = aws_subnet.private-subnet-two.id
+  route_table_id = aws_route_table.private-route-table.id
 }
 
 resource "aws_internet_gateway" "main-igw" {
