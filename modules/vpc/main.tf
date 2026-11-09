@@ -8,10 +8,10 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "private-subnet" {
+resource "aws_subnet" "private-subnet-one" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.private_subnet_cidr_block
-  availability_zone       = var.availability_zone
+  cidr_block              = var.private_subnet_cidr_block_one
+  availability_zone       = var.availability_zone_one
   map_public_ip_on_launch = false
 
   tags = {
@@ -19,14 +19,36 @@ resource "aws_subnet" "private-subnet" {
   }
 }
 
-resource "aws_subnet" "public-subnet" {
+resource "aws_subnet" "public-subnet-one" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidr_block
-  availability_zone       = var.availability_zone
+  cidr_block              = var.public_subnet_cidr_block_one
+  availability_zone       = var.availability_zone_one
   map_public_ip_on_launch = true
   
   tags = {
     Name = "${var.vpc_name}-public-subnet"
+  }
+}
+
+resource "aws_subnet" "private-subnet-two" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.private_subnet_cidr_block_two
+  availability_zone       = var.availability_zone_two
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "${var.vpc_name}-private-subnet-two"
+  }
+}
+
+resource "aws_subnet" "public-subnet-two" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_cidr_block_two
+  availability_zone       = var.availability_zone_two
+  map_public_ip_on_launch = true
+  
+  tags = {
+    Name = "${var.vpc_name}-public-subnet-two"
   }
 }
 
