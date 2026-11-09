@@ -24,7 +24,7 @@ resource "aws_subnet" "public-subnet-one" {
   cidr_block              = var.public_subnet_cidr_block_one
   availability_zone       = var.availability_zone_one
   map_public_ip_on_launch = true
-  
+
   tags = {
     Name = "${var.vpc_name}-public-subnet"
   }
@@ -46,7 +46,7 @@ resource "aws_subnet" "public-subnet-two" {
   cidr_block              = var.public_subnet_cidr_block_two
   availability_zone       = var.availability_zone_two
   map_public_ip_on_launch = true
-  
+
   tags = {
     Name = "${var.vpc_name}-public-subnet-two"
   }
@@ -89,5 +89,5 @@ resource "aws_route" "public-route" {
   route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.main-igw.id
-}   
+}
 
