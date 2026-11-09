@@ -1,0 +1,11 @@
+**/.terraform/*
+*.tfplan
+tfplan
+.env
+.env.*
+*.pem
+*.key
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
