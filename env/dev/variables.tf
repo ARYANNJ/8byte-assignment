@@ -33,8 +33,13 @@ variable "public_subnet_cidr_block" {
 }
 
 
-variable "availability_zone" {
+variable "availability_zone_one" {
   type        = string
   description = "Availability zone for the subnet"
-  default     = "" 
+  default     = "ap-south-1a" 
+}
+variable "availability_zone_two" {
+  type        = string
+  description = "Availability zone for the public subnet"
+  default     = "ap-south-1b" 
 }

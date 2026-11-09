@@ -16,7 +16,8 @@ module "vpc" {
     vpc_cidr_block            = var.vpc_cidr_block
     private_subnet_cidr_block  = var.private_subnet_cidr_block
     public_subnet_cidr_block   = var.public_subnet_cidr_block
-    availability_zone         = var.availability_zone
     environment               = var.environment
     aws_region                = var.aws_region
+    availability_zone_one     = var.availability_zone_one
+    availability_zone_two     = var.availability_zone_two
 }
