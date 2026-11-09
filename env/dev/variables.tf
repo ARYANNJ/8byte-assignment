@@ -20,18 +20,28 @@ variable "environment" {
   description = "Deployment environment"
 }
 
-variable "private_subnet_cidr_block" {
+variable "private_subnet_cidr_block_one" {
   type        = string
   description = "CIDR block for the subnet"
   default     = "10.0.1.0/24" 
 }
 
-variable "public_subnet_cidr_block" {
+variable "public_subnet_cidr_block_one" {
   type        = string
   description = "CIDR block for the public subnet"
   default     = "10.0.2.0/24" 
 }
+variable "private_subnet_cidr_block_two" {
+  type        = string
+  description = "CIDR block for the subnet"
+  default     = "10.0.3.0/24" 
+}
 
+variable "public_subnet_cidr_block_two" {
+  type        = string
+  description = "CIDR block for the public subnet"
+  default     = "10.0.4.0/24" 
+}
 
 variable "availability_zone_one" {
   type        = string
