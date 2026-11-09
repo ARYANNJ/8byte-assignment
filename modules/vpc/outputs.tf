@@ -20,42 +20,42 @@ output "vpc_name" {
 
 output "public_subnet_ids" {
   description = "IDs of the public subnets"
-  value       = [aws_subnet.public-subnet.id, aws_subnet.public-subnet-one.id]
+  value       = [aws_subnet.public-subnet-one.id, aws_subnet.public-subnet-two.id]
 }
 
 output "public_subnet_cidr_blocks" {
   description = "CIDR blocks of the public subnets"
-  value       = [aws_subnet.public-subnet.cidr_block, aws_subnet.public-subnet-one.cidr_block]
+  value       = [aws_subnet.public-subnet-one.cidr_block, aws_subnet.public-subnet-two.cidr_block]
 }
 
 output "public_subnet_arns" {
   description = "ARNs of the public subnets"
-  value       = [aws_subnet.public-subnet.arn, aws_subnet.public-subnet-one.arn]
+  value       = [aws_subnet.public-subnet-one.arn, aws_subnet.public-subnet-two.arn]
 }
 
 output "public_subnet_names" {
   description = "Names of the public subnets"
-  value       = [aws_subnet.public-subnet.tags["Name"], aws_subnet.public-subnet-one.tags["Name"]]
+  value       = [aws_subnet.public-subnet-one.tags["Name"], aws_subnet.public-subnet-two.tags["Name"]]
 }
 
 output "private_subnet_ids" {
   description = "IDs of the private subnets"
-  value       = [aws_subnet.private-subnet.id, aws_subnet.private-subnet-one.id]
+  value       = [aws_subnet.private-subnet-one.id, aws_subnet.private-subnet-two.id]
 }
 
 output "private_subnet_cidr_blocks" {
   description = "CIDR blocks of the private subnets"
-  value       = [aws_subnet.private-subnet.cidr_block, aws_subnet.private-subnet-one.cidr_block]
+  value       = [aws_subnet.private-subnet-one.cidr_block, aws_subnet.private-subnet-two.cidr_block]
 }
 
 output "private_subnet_arns" {
   description = "ARNs of the private subnets"
-  value       = [aws_subnet.private-subnet.arn, aws_subnet.private-subnet-one.arn]
+  value       = [aws_subnet.private-subnet-one.arn, aws_subnet.private-subnet-two.arn]
 }
 
 output "private_subnet_names" {
   description = "Names of the private subnets"
-  value       = [aws_subnet.private-subnet.tags["Name"], aws_subnet.private-subnet-one.tags["Name"]]
+  value       = [aws_subnet.private-subnet-one.tags["Name"], aws_subnet.private-subnet-two.tags["Name"]]
 }
 
 output "public_route_table_id" {

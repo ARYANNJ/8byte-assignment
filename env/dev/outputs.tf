@@ -35,7 +35,7 @@ output "private_subnet_Name" {
 
 output "public_subnet_id" {
   description = "The ID of the public subnet"
-  value       = module.vpc.public_subnet_id
+  value       = module.vpc.public_subnet_one_id
 }
 
 output "private_route_table_id" {
