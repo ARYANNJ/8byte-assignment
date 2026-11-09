@@ -45,6 +45,7 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
           role-session-name: gha-terraform-dev-${{ github.run_id }}
+          retry-max-attempts: 1
 
       - name: Verify AWS identity
         run: |
