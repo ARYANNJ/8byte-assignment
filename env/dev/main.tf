@@ -34,16 +34,16 @@ module "alb" {
 }
 
 module "ecs_cluster" {
-  source = "../../modules/ecs-cluster"
-  ecs_cluster_name = "dev-ecs-cluster"
-  vpc_id = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnet_ids
-  alb_sg_id = module.alb.alb_sg_id
-  instance_type = "t3.micro"
-  min_size = 1
-  max_size = 1
+  source              = "../../modules/ecs-cluster"
+  ecs_cluster_name    = "dev-ecs-cluster"
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = module.vpc.private_subnet_ids
+  alb_sg_id           = module.alb.alb_sg_id
+  instance_type       = "t3.micro"
+  min_size            = 1
+  max_size            = 1
   associate_public_ip = false
-  container_insights = false
+  container_insights  = false
   tags = {
     Environment = "dev"
     ManagedBy   = "Terraform"
