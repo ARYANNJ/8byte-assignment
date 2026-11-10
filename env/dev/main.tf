@@ -52,7 +52,7 @@ module "ecs_cluster" {
 }
 
 module "ecr" {
-  source = "../../modules/ecr"
+  source   = "../../modules/ecr"
   ecr_name = "dev-app"
 }
 
