@@ -1,0 +1,66 @@
+name: Deploy app
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "dev-app/**"
+      - ".github/workflows/deploy-app.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write 
+  contents: read
+
+concurrency:
+  group: deploy-app
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: ap-south-1
+  ECR_REPOSITORY: dev-app
+  ECS_CLUSTER: dev-ecs-cluster
+  ECS_SERVICE: dev-app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::625819364285:role/GitHubActionsTerraformDev
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push image
+        working-directory: dev-app
+        env:
+          REGISTRY: ${{ steps.ecr.outputs.registry }}
+          TAG: ${{ github.sha }}
+        run: |
+          IMAGE=$REGISTRY/$ECR_REPOSITORY
+          docker build --platform linux/amd64 -t $IMAGE:$TAG -t $IMAGE:latest .
+          docker push $IMAGE:$TAG
+          docker push $IMAGE:latest
+
+      - name: Roll the ECS service
+        run: |
+          aws ecs update-service \
+            --cluster $ECS_CLUSTER \
+            --service $ECS_SERVICE \
+            --force-new-deployment > /dev/null
+          aws ecs wait services-stable \
+            --cluster $ECS_CLUSTER \
+            --services $ECS_SERVICE
+
+      - name: Smoke test
+        run: |
+          DNS=$(aws elbv2 describe-load-balancers --names dev-alb-alb \
+            --query 'LoadBalancers[0].DNSName' --output text)
+          curl --fail --retry 5 --retry-delay 10 --retry-all-errors http://$DNS/health
