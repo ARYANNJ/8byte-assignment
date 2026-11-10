@@ -72,3 +72,16 @@ output "internet_gateway_id" {
   description = "The ID of the internet gateway"
   value       = module.vpc.internet_gateway_id
 }
+output "app_url" {
+  value = "http://${module.alb.alb_dns_name}"
+}
+output "ecs_cluster_name" {
+  description = "The name of the ECS cluster"
+  value       = module.ecs_cluster.cluster_name
+}
+output "ecs_cluster_arn" {
+  description = "The ARN of the ECS cluster"
+  value       = module.ecs_cluster.cluster_arn
+}
+
+
