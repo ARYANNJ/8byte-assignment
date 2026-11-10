@@ -80,7 +80,7 @@ module "service" {
 
   db_secret_arn = module.rds.secret_arn
   environment_variables = {
-    DB_HOST = module.rds.address
+    DB_HOST = split(":", module.rds.endpoint)[0]
     DB_PORT = "5432"
     DB_NAME = "postgres"
   }
