@@ -82,6 +82,7 @@ module "service" {
   environment_variables = {
     DB_PORT = "5432"
     DB_NAME = "postgres"
+    DB_HOST = module.rds.address
   }
 
 
