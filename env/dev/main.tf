@@ -60,7 +60,7 @@ module "rds" {
   source             = "../../modules/rds"
   rds_name           = "dev-rds"
   db_name            = "devdb"
-  master_username    = "admin"
+  master_username    = "app-admin"
   vpc_id             = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnet_ids
   allowed_sg_id      = module.ecs_cluster.instance_sg_id
