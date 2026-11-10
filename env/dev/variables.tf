@@ -53,3 +53,8 @@ variable "availability_zone_two" {
   description = "Availability zone for the public subnet"
   default     = "ap-south-1b"
 }
+
+variable "alb_name" {
+  type        = string
+  description = "Name of the ALB"
+}

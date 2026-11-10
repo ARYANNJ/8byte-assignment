@@ -23,3 +23,16 @@ module "vpc" {
   availability_zone_one         = var.availability_zone_one
   availability_zone_two         = var.availability_zone_two
 }
+
+module "alb" {
+  source            = "../../modules/alb"
+  alb_name          = var.alb_name
+  vpc_id            = module.vpc.vpc_id
+  vpc_cidr          = module.vpc.vpc_cidr_block
+  public_subnet_ids = module.vpc.public_subnet_ids
+  certificate_arn   = null  
+}
+
+output "app_url" {
+  value = "http://${module.alb.alb_dns_name}"
+}
