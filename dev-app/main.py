@@ -2,6 +2,7 @@ import os
 import psycopg
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -41,3 +42,16 @@ def list_items():
     with conn() as c:
         rows = c.execute("SELECT id, text FROM items ORDER BY id").fetchall()
     return [{"id": r[0], "text": r[1]} for r in rows]
+
+
+@app.get("/", response_class=HTMLResponse)
+def home():
+    with conn() as c:
+        rows = c.execute("SELECT id, text FROM items ORDER BY id").fetchall()
+    items = "".join(f"<li>{r[0]}: {r[1]}</li>" for r in rows)
+    return f"""
+    <h1>dev-app is running</h1>
+    <p>Connected to RDS PostgreSQL.</p>
+    <ul>{items}</ul>
+    <p><a href="/docs">API docs</a> | <a href="/health">Health</a></p>
+    """
