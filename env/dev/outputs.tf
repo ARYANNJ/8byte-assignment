@@ -83,7 +83,3 @@ output "ecs_cluster_arn" {
   description = "The ARN of the ECS cluster"
   value       = module.ecs_cluster.cluster_arn
 }
-
-output "app_url" {
-  value = "http://${module.alb.alb_dns_name}"
-}
