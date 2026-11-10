@@ -65,3 +65,26 @@ module "rds" {
   private_subnet_ids = module.vpc.private_subnet_ids
   allowed_sg_id      = module.ecs_cluster.instance_sg_id
 }
+
+module "service" {
+  source = "../../modules/ecs-service"
+
+  name              = "dev-app"
+  cluster_id        = module.ecs_cluster.cluster_id
+  capacity_provider = module.ecs_cluster.capacity_provider
+  vpc_id            = module.vpc.vpc_id
+  listener_arn      = module.alb.listener_arn
+
+  image          = "${module.ecr.repository_url}:latest"
+  container_port = 8000
+
+  db_secret_arn = module.rds.secret_arn
+  environment_variables = {
+    DB_HOST = module.rds.address
+    DB_PORT = "5432"
+    DB_NAME = module.rds.db_name
+  }
+
+
+}
+
