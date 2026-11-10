@@ -1,18 +1,18 @@
 output "address" {
-  value = aws_db_instance.this.address
+  value = aws_db_instance.db_instance
 }
 
 output "port" {
-  value = aws_db_instance.this.port
+  value = aws_db_instance.db_instance
 }
 
 output "db_name" {
-  value = aws_db_instance.this.db_name
+  value = aws_db_instance.db_instance
 }
 
 output "secret_arn" {
   description = "Secrets Manager ARN of the master credentials (JSON: username, password)"
-  value       = aws_db_instance.this.master_user_secret[0].secret_arn
+  value       = aws_db_instance.db_instance.master_user_secret[0].secret_arn
 }
 
 output "sg_id" {
