@@ -2,7 +2,7 @@ data "aws_ssm_parameter" "ecs_ami" {
   name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id"
 }
 resource "aws_ecs_cluster" "this" {
-  name = var.name
+  name = var.ecs_cluster_name
 
   setting {
     name  = "containerInsights"
@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "ec2_assume" {
 }
 
 resource "aws_iam_role" "instance" {
-  name               = "${var.name}-instance-role"
+  name               = "${var.ecs_cluster_name}-instance-role"
   assume_role_policy = data.aws_iam_policy_document.ec2_assume.json
   tags               = var.tags
 }
@@ -39,16 +39,16 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 }
 
 resource "aws_iam_instance_profile" "instance" {
-  name = "${var.name}-instance-profile"
+  name = "${var.ecs_cluster_name}-instance-profile"
   role = aws_iam_role.instance.name
   tags = var.tags
 }
 
 resource "aws_security_group" "instance" {
-  name        = "${var.name}-instance-sg"
+  name        = "${var.ecs_cluster_name}-instance-sg"
   description = "ECS container instances"
   vpc_id      = var.vpc_id
-  tags        = merge(var.tags, { Name = "${var.name}-instance-sg" })
+  tags        = merge(var.tags, { Name = "${var.ecs_cluster_name}-instance-sg" })
 }
 
 resource "aws_vpc_security_group_ingress_rule" "from_alb" {
@@ -67,7 +67,7 @@ resource "aws_vpc_security_group_egress_rule" "all" {
 }
 
 resource "aws_launch_template" "this" {
-  name_prefix   = "${var.name}-lt-"
+  name_prefix   = "${var.ecs_cluster_name}-lt-"
   image_id      = data.aws_ssm_parameter.ecs_ami.value
   instance_type = var.instance_type
 
@@ -104,7 +104,7 @@ resource "aws_launch_template" "this" {
 
   tag_specifications {
     resource_type = "instance"
-    tags          = merge(var.tags, { Name = "${var.name}-instance" })
+    tags          = merge(var.tags, { Name = "${var.ecs_cluster_name}-instance" })
   }
 
   lifecycle {
@@ -113,7 +113,7 @@ resource "aws_launch_template" "this" {
 }
 
 resource "aws_autoscaling_group" "this" {
-  name                = "${var.name}-asg"
+  name                = "${var.ecs_cluster_name}-asg"
   min_size            = var.min_size
   max_size            = var.max_size
   desired_capacity    = var.min_size
@@ -140,7 +140,7 @@ resource "aws_autoscaling_group" "this" {
 }
 
 resource "aws_ecs_capacity_provider" "this" {
-  name = "${var.name}-cp"
+  name = "${var.ecs_cluster_name}-cp"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.this.arn

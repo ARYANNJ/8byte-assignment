@@ -1,4 +1,4 @@
-variable "name" {
+variable "ecs_cluster_name" {
   description = "Cluster name; also used as the prefix for related resources"
   type        = string
 }
