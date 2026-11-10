@@ -12,7 +12,7 @@ output "db_name" {
 
 output "secret_arn" {
   description = "Secrets Manager ARN of the master credentials (JSON: username, password)"
-  value       = aws_db_instance.db_instance.arn
+  value       = aws_db_instance.db_instance.master_user_secret[0].secret_arn
 }
 
 output "sg_id" {
