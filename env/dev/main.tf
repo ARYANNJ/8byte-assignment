@@ -88,3 +88,80 @@ module "service" {
 
 }
 
+module "monitoring_cluster" {
+  source              = "../../modules/ecs-cluster"
+  ecs_cluster_name    = "dev-monitoring-cluster"
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = module.vpc.private_subnet_ids
+  alb_sg_id           = module.alb.alb_sg_id
+  instance_type       = "t3.small" # 2 GiB, see note below
+  min_size            = 1
+  max_size            = 1
+  associate_public_ip = false
+  container_insights  = false
+  tags = {
+    Environment = "dev"
+    ManagedBy   = "Terraform"
+    Project     = "Infrastructure"
+  }
+}
+
+# module "ecr_grafana" {
+#   source   = "../../modules/ecr"
+#   ecr_name = "dev-grafana"
+# }
+
+# module "ecr_loki" {
+#   source   = "../../modules/ecr"
+#   ecr_name = "dev-loki"
+# }
+
+# module "ecr_prometheus" {
+#   source   = "../../modules/ecr"
+#   ecr_name = "dev-prometheus"
+# }
+
+# module "grafana" {
+#   source            = "../../modules/ecs-service"
+#   name              = "dev-grafana"
+#   cluster_id        = module.monitoring_cluster.cluster_id
+#   capacity_provider = module.monitoring_cluster.capacity_provider
+#   vpc_id            = module.vpc.vpc_id
+#   image             = "${module.ecr_grafana.repository_url}:latest"
+
+#   network_mode     = "host"
+#   container_port   = 3000
+#   memory           = 256
+#   enable_db_secret = false   # <- missing on your Grafana call
+
+#   enable_alb             = true
+#   listener_arn           = module.alb.listener_arn
+#   listener_rule_priority = 10
+#   path_patterns          = ["/grafana", "/grafana/*"]
+#   health_check_path      = "/grafana/api/health"
+# }
+
+# module "loki" {
+#   source            = "../../modules/ecs-service"
+#   name              = "dev-loki"
+#   cluster_id        = module.monitoring_cluster.cluster_id
+#   capacity_provider = module.monitoring_cluster.capacity_provider
+#   vpc_id            = module.vpc.vpc_id
+#   image             = "${module.ecr_loki.repository_url}:latest"
+#   container_port    = 3100
+# }
+
+# module "prometheus" {
+#   source            = "../../modules/ecs-service"
+#   name              = "dev-prometheus"
+#   cluster_id        = module.monitoring_cluster.cluster_id
+#   capacity_provider = module.monitoring_cluster.capacity_provider
+#   vpc_id            = module.vpc.vpc_id
+#   image             = "${module.ecr_prometheus.repository_url}:latest"
+
+#   network_mode     = "host"
+#   container_port   = 9090
+#   memory           = 512
+#   enable_alb       = false   
+#   enable_db_secret = false   
+# }
