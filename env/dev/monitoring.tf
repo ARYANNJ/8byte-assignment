@@ -1,12 +1,12 @@
-resource "aws_cloudwatch_log_group" "app_logs" {
-  name              = "/ecs/dev-app"
-  retention_in_days = 7
+# resource "aws_cloudwatch_log_group" "app_logs" {
+#   name              = "/ecs/dev-app"
+#   retention_in_days = 7
 
-  tags = {
-    Environment = "dev"
-    ManagedBy   = "Terraform"
-  }
-}
+#   tags = {
+#     Environment = "dev"
+#     ManagedBy   = "Terraform"
+#   }
+# }
 
 resource "aws_cloudwatch_dashboard" "infra_dashboard" {
   dashboard_name = "dev-infra-overview"
