@@ -1,6 +1,5 @@
 variable "name" {
-  description = "Service name, used as a prefix (e.g. dev-app)"
-  type        = string
+  type = string
 }
 
 variable "cluster_id" {
@@ -15,13 +14,8 @@ variable "vpc_id" {
   type = string
 }
 
-variable "listener_arn" {
-  type = string
-}
-
 variable "image" {
-  description = "Full image URI, e.g. <ecr_repository_url>:latest"
-  type        = string
+  type = string
 }
 
 variable "container_port" {
@@ -35,7 +29,7 @@ variable "cpu" {
 }
 
 variable "memory" {
-  description = "Hard memory limit in MiB. A t3.micro has about 800 MiB usable"
+  description = "Hard memory limit in MiB"
   type        = number
   default     = 384
 }
@@ -45,14 +39,32 @@ variable "desired_count" {
   default = 1
 }
 
-variable "health_check_path" {
-  type    = string
-  default = "/health"
+variable "network_mode" {
+  description = "bridge (dynamic ports, used by the app) or host (fixed ports, used by monitoring)"
+  type        = string
+  default     = "bridge"
 }
 
-variable "path_pattern" {
+variable "host_port" {
+  description = "Bridge mode only; 0 means dynamic"
+  type        = number
+  default     = 0
+}
+
+# ---------- ALB (optional) ----------
+variable "enable_alb" {
+  type    = bool
+  default = true
+}
+
+variable "listener_arn" {
   type    = string
-  default = "/*"
+  default = null
+}
+
+variable "path_patterns" {
+  type    = list(string)
+  default = ["/*"]
 }
 
 variable "listener_rule_priority" {
@@ -60,15 +72,61 @@ variable "listener_rule_priority" {
   default = 100
 }
 
-variable "db_secret_arn" {
-  description = "Secrets Manager ARN of the RDS-managed master secret"
-  type        = string
+variable "health_check_path" {
+  type    = string
+  default = "/health"
 }
 
-variable "environment_variables" {
-  description = "Plain (non-secret) env vars, e.g. DB_HOST, DB_PORT, DB_NAME"
+variable "allowed_cidrs" {
+  description = "If set, the listener rule only matches these source IPs"
+  type        = list(string)
+  default     = []
+}
+
+# ---------- Secrets (optional) ----------
+variable "enable_db_secret" {
+  type    = bool
+  default = true
+}
+
+variable "db_secret_arn" {
+  type    = string
+  default = null
+}
+
+variable "secrets" {
+  description = "ENV_NAME => full Secrets Manager or SSM parameter ARN"
   type        = map(string)
   default     = {}
+}
+
+variable "secret_arns" {
+  description = "ARNs the execution role may read (the targets of var.secrets)"
+  type        = list(string)
+  default     = []
+}
+
+# ---------- Other ----------
+variable "environment_variables" {
+  type    = map(string)
+  default = {}
+}
+
+variable "command" {
+  type    = list(string)
+  default = []
+}
+
+variable "volumes" {
+  description = "Docker volume name => container path (persists across task restarts, not instance replacement)"
+  type        = map(string)
+  default     = {}
+}
+
+variable "task_policy_arns" {
+  description = "Managed policies to attach to the task role"
+  type        = list(string)
+  default     = []
 }
 
 variable "log_retention_days" {
