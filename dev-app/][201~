@@ -1,0 +1,135 @@
+{
+    "service": {
+        "serviceArn": "arn:aws:ecs:ap-south-1:625819364285:service/dev-ecs-cluster/dev-app",
+        "serviceName": "dev-app",
+        "clusterArn": "arn:aws:ecs:ap-south-1:625819364285:cluster/dev-ecs-cluster",
+        "loadBalancers": [
+            {
+                "targetGroupArn": "arn:aws:elasticloadbalancing:ap-south-1:625819364285:targetgroup/dev-app-tg/942af01d9847a23e",
+                "containerName": "dev-app",
+                "containerPort": 8000
+            }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 1,
+        "runningCount": 1,
+        "pendingCount": 0,
+        "capacityProviderStrategy": [
+            {
+                "capacityProvider": "dev-ecs-cluster-cp",
+                "weight": 1,
+                "base": 0
+            }
+        ],
+        "taskDefinition": "arn:aws:ecs:ap-south-1:625819364285:task-definition/dev-app:4",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": false,
+                "rollback": false
+            },
+            "maximumPercent": 100,
+            "minimumHealthyPercent": 0,
+            "strategy": "ROLLING",
+            "bakeTimeInMinutes": 0
+        },
+        "deployments": [
+            {
+                "id": "ecs-svc/1805690479348101547",
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:ap-south-1:625819364285:task-definition/dev-app:4",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2026-11-10T23:26:25.332000+00:00",
+                "updatedAt": "2026-11-10T23:26:25.332000+00:00",
+                "capacityProviderStrategy": [
+                    {
+                        "capacityProvider": "dev-ecs-cluster-cp",
+                        "weight": 1,
+                        "base": 0
+                    }
+                ],
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/1805690479348101547 in progress."
+            },
+            {
+                "id": "ecs-svc/1562183677691631090",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:ap-south-1:625819364285:task-definition/dev-app:4",
+                "desiredCount": 1,
+                "pendingCount": 0,
+                "runningCount": 1,
+                "failedTasks": 0,
+                "createdAt": "2026-11-10T23:13:49.012000+00:00",
+                "updatedAt": "2026-11-10T23:26:25.332000+00:00",
+                "capacityProviderStrategy": [
+                    {
+                        "capacityProvider": "dev-ecs-cluster-cp",
+                        "weight": 1,
+                        "base": 0
+                    }
+                ],
+                "rolloutState": "COMPLETED",
+                "rolloutStateReason": "ECS deployment ecs-svc/1562183677691631090 completed."
+            }
+        ],
+        "roleArn": "arn:aws:iam::625819364285:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [
+            {
+                "id": "f1211e81-1515-4c18-96ee-597cbeef75f2",
+                "createdAt": "2026-11-10T23:16:26.058000+00:00",
+                "message": "(service dev-app) has reached a steady state."
+            },
+            {
+                "id": "f2fbaed7-b38f-497c-afef-43ea4ccbcea8",
+                "createdAt": "2026-11-10T23:16:26.057000+00:00",
+                "message": "(service dev-app) (deployment ecs-svc/1562183677691631090) deployment completed."
+            },
+            {
+                "id": "e6ee317a-3731-4028-925d-fbf9cd5922b3",
+                "createdAt": "2026-11-10T23:16:16.691000+00:00",
+                "message": "(service dev-app) registered 1 targets in (target-group arn:aws:elasticloadbalancing:ap-south-1:625819364285:targetgroup/dev-app-tg/942af01d9847a23e)"
+            },
+            {
+                "id": "2996bf98-bf58-46f5-9f8b-90fe65f74810",
+                "createdAt": "2026-11-10T23:15:12.833000+00:00",
+                "message": "(service dev-app, taskSet ecs-svc/1562183677691631090) has started 1 tasks: (task f86b50235f774452a78741939c34331c)."
+            },
+            {
+                "id": "5fd2b6ca-1426-4dcc-a60d-ecbb6893b3ef",
+                "createdAt": "2026-11-10T23:15:12.433000+00:00",
+                "message": "(service dev-app) has started 1 tasks: (task f86b50235f774452a78741939c34331c)."
+            },
+            {
+                "id": "e5ba3232-05b7-4428-bfd8-233a9e7ee6e2",
+                "createdAt": "2026-11-10T23:14:42.577000+00:00",
+                "message": "(service dev-app) was unable to place a task. Reason: Task failed to start."
+            },
+            {
+                "id": "3fd6c760-f294-4033-8beb-ce065f4a245b",
+                "createdAt": "2026-11-10T23:14:02.858000+00:00",
+                "message": "(service dev-app, taskSet ecs-svc/1562183677691631090) has started 1 tasks: (task b8d4c456af1a4fd19576ba2d7ed2ffc7)."
+            },
+            {
+                "id": "299e6669-3f7f-4fd7-bed2-88f22095659c",
+                "createdAt": "2026-11-10T23:14:02.364000+00:00",
+                "message": "(service dev-app) has started 1 tasks: (task b8d4c456af1a4fd19576ba2d7ed2ffc7)."
+            }
+        ],
+        "createdAt": "2026-11-10T23:13:49.012000+00:00",
+        "placementConstraints": [],
+        "placementStrategy": [],
+        "healthCheckGracePeriodSeconds": 60,
+        "schedulingStrategy": "REPLICA",
+        "deploymentController": {
+            "type": "ECS"
+        },
+        "createdBy": "arn:aws:iam::625819364285:role/GitHubActionsTerraformDev",
+        "enableECSManagedTags": false,
+        "propagateTags": "NONE",
+        "enableExecuteCommand": false,
+        "availabilityZoneRebalancing": "DISABLED"
+    }
+}
