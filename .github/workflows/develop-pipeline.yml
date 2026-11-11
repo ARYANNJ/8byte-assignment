@@ -11,6 +11,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  packages: read
 
 concurrency:
   group: deploy-app
@@ -28,20 +29,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  
+          fetch-depth: 0
 
       - name: TruffleHog secret scan
-        uses: trufflesecurity/trufflehog@main   
+        uses: trufflesecurity/trufflehog@main
         with:
           path: ./
           extra_args: --only-verified
+
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build image (local, no AWS access yet)
         working-directory: dev-app
         run: docker build --platform linux/amd64 -t dev-app:${{ github.sha }} .
 
       - name: Snyk container scan
-        uses: snyk/actions/docker@master   
+        uses: snyk/actions/docker@master
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -77,4 +85,5 @@ jobs:
             --service $ECS_SERVICE \
             --force-new-deployment > /dev/null
           aws ecs wait services-stable \
-
+            --cluster $ECS_CLUSTER \
+            --services $ECS_SERVICE

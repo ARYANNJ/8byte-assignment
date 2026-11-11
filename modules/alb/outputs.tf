@@ -6,6 +6,5 @@ output "listener_arn" {
   value = local.https_enabled ? aws_lb_listener.https[0].arn : aws_lb_listener.http.arn
 }
 output "arn_suffix" {
-  description = "ARN suffix of the ALB for CloudWatch metrics"
   value       = aws_lb.this.arn_suffix 
 }
