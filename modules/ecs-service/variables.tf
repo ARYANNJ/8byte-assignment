@@ -51,7 +51,7 @@ variable "host_port" {
   default     = 0
 }
 
-# ---------- ALB (optional) ----------
+
 variable "enable_alb" {
   type    = bool
   default = true
@@ -83,7 +83,6 @@ variable "allowed_cidrs" {
   default     = []
 }
 
-# ---------- Secrets (optional) ----------
 variable "enable_db_secret" {
   type    = bool
   default = true
@@ -106,7 +105,7 @@ variable "secret_arns" {
   default     = []
 }
 
-# ---------- Other ----------
+
 variable "environment_variables" {
   type    = map(string)
   default = {}

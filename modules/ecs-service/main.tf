@@ -51,13 +51,13 @@ resource "aws_lb_target_group" "this" {
   name                 = "${var.name}-tg"
   port                 = var.container_port
   protocol             = "HTTP"
-  target_type          = "instance" # required for bridge networking
+  target_type          = "instance" 
   vpc_id               = var.vpc_id
   deregistration_delay = 10
 
   health_check {
     path                = var.health_check_path
-    port                = "traffic-port" # resolves to the dynamic host port
+    port                = "traffic-port" 
     matcher             = "200"
     interval            = 30
     timeout             = 5
@@ -103,7 +103,7 @@ resource "aws_ecs_task_definition" "this" {
 
       portMappings = [{
         containerPort = var.container_port
-        hostPort      = 0 # dynamic host port
+        hostPort      = 0 
         protocol      = "tcp"
       }]
 
