@@ -3,10 +3,6 @@ output "log_group_name" {
   value       = var.log_group_name
 }
 
-output "log_group_name" {
-  value = aws_cloudwatch_log_group.this.name
-}
-
 output "task_role_arn" {
   value = aws_iam_role.task.arn
 }
