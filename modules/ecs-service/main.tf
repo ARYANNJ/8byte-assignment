@@ -1,15 +1,5 @@
 data "aws_region" "current" {}
 
-resource "aws_cloudwatch_log_group" "this" {
-  count = var.create_log_group ? 1 : 0
-
-  name              = "/ecs/${var.name}"
-  retention_in_days = 7
-
-  tags = var.tags
-}
-
-
 data "aws_iam_policy_document" "ecs_tasks_assume" {
   statement {
     actions = ["sts:AssumeRole"]
