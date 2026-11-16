@@ -1,11 +1,6 @@
 name: Dev Deploy app
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "dev-app/**"
-      - ".github/workflows/deploy-app.yml"
   workflow_dispatch:
 
 permissions:
