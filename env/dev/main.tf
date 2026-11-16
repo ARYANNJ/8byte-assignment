@@ -78,7 +78,7 @@ module "service" {
   capacity_provider = module.ecs_cluster.capacity_provider
   vpc_id            = module.vpc.vpc_id
   listener_arn      = module.alb.listener_arn
-
+  log_group_name = aws_cloudwatch_log_group.app_logs.name
   image          = "${module.ecr.repository_url}:latest"
   container_port = 8000
 
