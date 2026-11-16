@@ -85,8 +85,8 @@ module "service" {
   db_secret_arn = module.rds.secret_arn
   depends_on    = [module.vpc, module.alb, module.ecs_cluster, module.ecr, module.rds]
   environment_variables = {
-    DB_PORT = "5432"
-    DB_NAME = "postgres"
+    DB_PORT = var.DB_PORT
+    DB_NAME = var.DB_NAME
     DB_HOST = module.rds.address
   }
 

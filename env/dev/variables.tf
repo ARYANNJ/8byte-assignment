@@ -58,3 +58,15 @@ variable "alb_name" {
   type        = string
   description = "Name of the ALB"
 }
+
+variable "DB_PORT" {
+  type        = string
+  description = "Database port"
+  default     = "5432"
+}
+
+variable "DB_NAME" {
+  type        = string
+  description = "Database name"
+  default     = "postgres"
+}
