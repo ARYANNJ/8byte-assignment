@@ -31,7 +31,7 @@ module "alb" {
   vpc_cidr          = module.vpc.vpc_cidr_block
   public_subnet_ids = module.vpc.public_subnet_ids
   certificate_arn   = null
-  depends_on         = [module.vpc]
+  depends_on        = [module.vpc]
 }
 
 module "ecs_cluster" {
@@ -45,7 +45,7 @@ module "ecs_cluster" {
   max_size            = 1
   associate_public_ip = false
   container_insights  = false
-  depends_on = [module.vpc, module.alb]
+  depends_on          = [module.vpc, module.alb]
   tags = {
     Environment = "dev"
     ManagedBy   = "Terraform"
@@ -54,8 +54,8 @@ module "ecs_cluster" {
 }
 
 module "ecr" {
-  source   = "../../modules/ecr"
-  ecr_name = "dev-app"
+  source     = "../../modules/ecr"
+  ecr_name   = "dev-app"
   depends_on = [module.vpc, module.alb, module.ecs_cluster]
 }
 
@@ -67,7 +67,7 @@ module "rds" {
   vpc_id             = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnet_ids
   allowed_sg_id      = module.ecs_cluster.instance_sg_id
-  depends_on = [module.vpc, module.ecs_cluster]
+  depends_on         = [module.vpc, module.ecs_cluster]
 }
 
 module "service" {
@@ -83,7 +83,7 @@ module "service" {
   container_port = 8000
 
   db_secret_arn = module.rds.secret_arn
-  depends_on = [module.vpc, module.alb, module.ecs_cluster, module.ecr, module.rds]
+  depends_on    = [module.vpc, module.alb, module.ecs_cluster, module.ecr, module.rds]
   environment_variables = {
     DB_PORT = "5432"
     DB_NAME = "postgres"
