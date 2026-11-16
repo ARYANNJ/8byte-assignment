@@ -137,3 +137,9 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "create_log_group" {
+  description = "Whether to create the CloudWatch log group"
+  type        = bool
+  default     = true
+}
