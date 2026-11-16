@@ -1,7 +1,10 @@
 variable "name" {
   type = string
 }
-
+variable "log_group_name" {
+  description = "CloudWatch log group name for ECS container logs"
+  type        = string
+}
 variable "cluster_id" {
   type = string
 }

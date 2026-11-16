@@ -1,5 +1,6 @@
-output "service_name" {
-  value = aws_ecs_service.this.name
+output "log_group_name" {
+  description = "CloudWatch log group used by the ECS service"
+  value       = var.log_group_name
 }
 
 output "log_group_name" {
